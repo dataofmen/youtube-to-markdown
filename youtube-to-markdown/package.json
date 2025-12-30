@@ -2,6 +2,10 @@
   "name": "youtube-to-markdown-app",
   "version": "1.0.0",
   "description": "YouTube to Markdown Converter Mac App",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dataofmen/youtube-to-markdown.git"
+  },
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
@@ -27,7 +31,6 @@
       "electron/**/*",
       "backend/src/**/*",
       "backend/package.json",
-      "backend/.env",
       "frontend/dist/**/*"
     ],
     "asarUnpack": [
@@ -44,6 +47,13 @@
     ],
     "directories": {
       "buildResources": "assets"
-    }
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "dataofmen",
+        "repo": "youtube-to-markdown"
+      }
+    ]
   }
 }
