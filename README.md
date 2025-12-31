@@ -1,253 +1,118 @@
-# YouTube to Markdown Converter
+# 🎥 YouTube to Markdown Converter (Mac Desktop App)
 
-Convert YouTube channel videos into NotebookLM-ready markdown files with AI-generated summaries.
+[![Release](https://img.shields.io/github/v/release/dataofmen/youtube-to-markdown?style=flat-square&color=blue)](https://github.com/dataofmen/youtube-to-markdown/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-## 🎯 Features
+Convert entire YouTube channels into high-quality, NotebookLM-ready Markdown files with AI-generated summaries. Now available as a native macOS application for a seamless experience.
 
-- **Channel Processing**: Convert entire YouTube channels to markdown
-- **AI Summaries**: Google Gemini 3.0 Pro Preview generates summaries and key takeaways
-- **NotebookLM Ready**: Automatic quarterly file bundling (50-file limit)
-- **Real-time Progress**: Live updates via Server-Sent Events
-- **Cost Control**: Monitor Gemini API usage
-- **Date Filtering**: Optional date range for video selection
-- **Web Interface**: Clean, responsive React UI
+---
 
-## 📋 Prerequisites
+## ✨ Features
 
-- Node.js 18+ and npm
-- YouTube Data API v3 Key
-- Google Gemini API Key
+- **🚀 Native Mac Experience**: Easy-to-use desktop application designed for macOS.
+- **📥 Channel-to-Markdown**: Automatically convert all videos from a YouTube channel into structured Markdown.
+- **🤖 AI-Powered Summaries**: Leverage **Google Gemini 1.5 Pro/Flash** to generate concise 3-sentence summaries and key takeaways for every video.
+- **📂 NotebookLM Optimized**: 
+  - Automatically bundles videos into quarterly files (e.g., `2024-Q1.md`).
+  - Respects NotebookLM's 50-file limit by merging content efficiently.
+- **🕒 Full Transcripts**: Includes timestamped links directly back to the YouTube video.
+- **📊 Real-time Progress**: Monitor the conversion process with a live progress bar and status updates.
+- **💰 Usage Insights**: Real-time estimation of Gemini API usage and costs.
 
-## 🚀 Quick Start
+---
 
-### 1. Clone and Install
+## 🚀 Quick Start (Recommended)
 
+### 1. Download
+Go to the [**Releases**](https://github.com/dataofmen/youtube-to-markdown/releases) page and download the latest `.dmg` file.
+- **Apple Silicon (M1/M2/M3)**: Choose `youtube-to-markdown-app-X.X.X-arm64.dmg`
+- **Intel Mac**: Choose `youtube-to-markdown-app-X.X.X.dmg`
+- **Universal**: Choose `youtube-to-markdown-app-X.X.X-universal.dmg`
+
+### 2. Install
+1. Open the `.dmg` file.
+2. Drag **YouTube to Markdown** to your **Applications** folder.
+3. Right-click the app and select **Open** (required for the first time on macOS).
+
+### 3. Run
+1. Open the app.
+2. Enter your **YouTube Data API Key** and **Gemini API Key** (Settings/Configuration).
+3. Paste a YouTube channel URL (e.g., `https://www.youtube.com/@dataofmen`).
+4. Click **Start Conversion**.
+5. Once complete, download the generated ZIP file containing your Markdown files.
+
+---
+
+## 🔑 Prerequisites (API Keys)
+
+To use this app, you need two API keys from Google Cloud:
+
+1.  **YouTube Data API v3 Key**: [Get it here](https://console.cloud.google.com/apis/library/youtube.googleapis.com)
+2.  **Google Gemini API Key**: [Get it here](https://aistudio.google.com/app/apikey)
+
+*Both APIs offer generous free tiers for personal usage.*
+
+---
+
+## 🛠️ Development & Building from Source
+
+If you want to build the application manually or contribute:
+
+### 1. Requirements
+- Node.js (v18 or higher)
+- npm
+
+### 2. Setup
 ```bash
-# Navigate to project directory
+git clone https://github.com/dataofmen/youtube-to-markdown.git
 cd youtube-to-markdown
-
-# Install backend dependencies
-cd backend
 npm install
-
-# Install frontend dependencies
-cd ../frontend
-npm install
+npm run backend:install
+npm run frontend:install
 ```
 
-### 2. Configure API Keys
-
-Edit `backend/.env`:
-
-```env
-# YouTube Data API v3
-YOUTUBE_API_KEY=your_youtube_api_key_here
-
-# Gemini API
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-3.0-pro-preview
-
-# Server Configuration
-PORT=3001
-NODE_ENV=development
-
-# Processing Configuration
-MAX_CONCURRENT_JOBS=3
-MAX_VIDEOS_PER_JOB=500
-```
-
-### 3. Start the Application
-
-**Terminal 1 - Backend:**
+### 3. Run in Development Mode
 ```bash
-cd backend
-npm start
-```
-
-**Terminal 2 - Frontend:**
-```bash
-cd frontend
 npm run dev
 ```
 
-### 4. Use the Application
+### 4. Build the App
+```bash
+# Build frontend and package Mac app
+npm run build:mac
+```
+The packaged app will be available in the `dist/` folder.
 
-1. Open browser to `http://localhost:3000`
-2. Enter YouTube channel URL (e.g., `https://www.youtube.com/@channelname`)
-3. Optional: Set date filters
-4. Click "Start Conversion"
-5. Wait for processing (progress shown in real-time)
-6. Download the generated ZIP file
-7. Extract and upload `quarterly/` files to NotebookLM
+---
 
 ## 📁 Output Structure
 
+The app generates a ZIP file with the following structure:
 ```
-channel-name-YYYYMMDD-HHMMSS.zip
+channel-name-timestamp.zip
 ├── details/
-│   ├── YYYYMMDD-video-title-1.md
-│   ├── YYYYMMDD-video-title-2.md
+│   ├── 20240115-video-title.md      # Individual video notes
 │   └── ...
 ├── quarterly/
-│   ├── YYYY-Q1.md (for NotebookLM - max 50 videos)
-│   ├── YYYY-Q2.md
+│   ├── 2024-Q1.md                   # Bundled (max 50 videos) for NotebookLM
 │   └── ...
-└── index.md (overview with links)
+└── index.md                         # Table of contents with links
 ```
+
+---
 
 ## 📝 Markdown Format
+Each video entry includes:
+- **Title & Metadata**: URL, Publish Date, Duration.
+- **Summary**: 3-sentence AI summary.
+- **Key Takeaways**: Bullet points of main insights.
+- **Content**: Full transcript with clickable [12:34](URL?t=754) timestamp links.
 
-Each video markdown includes:
-- **Summary**: 3-sentence AI-generated summary
-- **Key Takeaways**: Bullet points of main insights
-- **Content**: Full transcript with timestamp links
-- **Metadata**: Title, URL, publish date, duration
-
-Example:
-```markdown
-# Video Title
-
-**URL**: https://www.youtube.com/watch?v=VIDEO_ID
-**Published**: 2024-01-15
-**Duration**: 15.5 minutes
-
-## Summary
-[AI-generated 3-sentence summary]
-
-## Key Takeaways
-- [Key point 1]
-- [Key point 2]
-- [Key point 3]
-
-## Content
-[Formatted transcript with [timestamp links](URL?t=123)]
-```
-
-## 💰 Cost Estimation
-
-- **YouTube API**: Free (10,000 units/day quota)
-- **Google Gemini 3.0 Pro Preview**:
-  - Pricing varies (Free tier available)
-  - Pay-as-you-go pricing applies for higher usage
-
-## 🔧 Configuration
-
-### Backend Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `YOUTUBE_API_KEY` | - | **Required**: YouTube Data API v3 key |
-| `GEMINI_API_KEY` | - | **Required**: Google Gemini API key |
-| `GEMINI_MODEL` | `gemini-3.0-pro-preview` | Gemini model to use |
-| `PORT` | `3001` | Backend server port |
-| `MAX_CONCURRENT_JOBS` | `3` | Max parallel conversion jobs |
-| `MAX_VIDEOS_PER_JOB` | `500` | Max videos per conversion |
-
-### Frontend Environment Variables
-
-Create `frontend/.env.local`:
-
-```env
-VITE_API_URL=http://localhost:3001
-```
-
-## 🎓 Usage with NotebookLM
-
-1. Extract the downloaded ZIP file
-2. Go to [NotebookLM](https://notebooklm.google.com)
-3. Create a new notebook
-4. Upload files from the `quarterly/` folder
-   - Each quarterly file contains up to 50 videos
-   - Upload multiple quarters as needed
-5. Start asking questions about the videos!
-
-## 🛠️ Development
-
-### Project Structure
-
-```
-youtube-to-markdown/
-├── backend/
-│   ├── src/
-│   │   ├── services/
-│   │   │   ├── youtubeService.js    # YouTube Data API
-│   │   │   ├── transcriptService.js # Transcript extraction
-│   │   │   ├── geminiService.js     # AI summarization
-│   │   │   └── markdownService.js   # Markdown generation
-│   │   └── server.js                # Express API + SSE
-│   ├── package.json
-│   └── .env
-└── frontend/
-    ├── src/
-    │   ├── App.jsx                  # Main React component
-    │   ├── main.jsx                 # Entry point
-    │   └── index.css                # Tailwind CSS
-    ├── package.json
-    └── vite.config.js
-```
-
-### API Endpoints
-
-- `POST /api/convert` - Start conversion job
-- `GET /api/jobs/:jobId` - Get job status
-- `GET /api/jobs/:jobId/stream` - SSE real-time updates
-- `GET /api/jobs/:jobId/download` - Download ZIP file
-
-### Tech Stack
-
-**Backend:**
-- Node.js + Express
-- YouTube Data API v3
-- YouTube InnerTube API (transcripts)
-- Google Gemini 3.0 Pro Preview
-- Archiver (ZIP creation)
-- Server-Sent Events (SSE)
-
-**Frontend:**
-- React 18
-- Vite
-- Tailwind CSS
-- Axios
-- EventSource (SSE client)
-
-## 📊 Monitoring
-
-Watch the console for real-time processing logs:
-
-```
-🔍 Resolving channel ID from: https://www.youtube.com/@channelname
-✅ Channel ID: UC...
-📥 Fetching videos (page token: first)
-  ✓ Video Title 1
-  ✓ Video Title 2
-✅ Total videos fetched: 25
-🎬 Fetching transcript for: Video Title 1
-  ✓ Transcript fetched (150 segments)
-🤖 Generating AI summary for: Video Title 1
-  ✓ Generated (2.5s, 1250 chars)
-💰 Total Estimated Cost: $0.0000
-```
-
-## 🐛 Troubleshooting
-
-**Issue**: "YouTube API quota exceeded"
-- **Solution**: Wait 24 hours or use different API key
-
-**Issue**: "Transcript not available"
-- **Solution**: Video may have no captions; system skips and continues
-
-**Issue**: "Gemini API error"
-- **Solution**: Check API key and quota
-
-**Issue**: "Port 3001 already in use"
-- **Solution**: Change `PORT` in `.env` or kill existing process
+---
 
 ## 📄 License
-
 MIT
 
 ## 🙏 Credits
-
-- Inspired by YouTube video: "Use Obsidian for PKM and Automation"
-- Built for NotebookLM integration
-- Uses YouTube Data API v3 and Google Gemini 3.0 Pro Preview
+- Built for **NotebookLM** enthusiasts.
+- Powered by **Google Gemini** and **YouTube Data API**.
