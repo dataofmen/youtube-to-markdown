@@ -114,5 +114,6 @@ Each video entry includes:
 MIT
 
 ## 🙏 Credits
+- Inspired by and based on the original script by **Zsolt Viczián** from the video: [Turn any YouTube Channel into your AI Mentor](https://www.youtube.com/watch?v=l0cfhGwaAG8).
 - Built for **NotebookLM** enthusiasts.
 - Powered by **Google Gemini** and **YouTube Data API**.
