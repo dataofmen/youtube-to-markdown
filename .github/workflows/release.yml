@@ -27,6 +27,11 @@ jobs:
           npm run frontend:install
 
       - name: Build and Publish
-        run: npm run frontend:build && npx electron-builder --publish always
+        run: |
+          npm run frontend:build
+          npx electron-builder --mac --publish always
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List artifacts
+        run: ls -R dist || true

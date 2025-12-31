@@ -1,6 +1,6 @@
 {
   "name": "youtube-to-markdown-app",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "YouTube to Markdown Converter Mac App",
   "repository": {
     "type": "git",
@@ -25,7 +25,25 @@
   "build": {
     "appId": "com.youtube-to-markdown.app",
     "mac": {
-      "category": "public.app-category.productivity"
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal",
+            "arm64",
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "universal",
+            "arm64",
+            "x64"
+          ]
+        }
+      ]
     },
     "files": [
       "electron/**/*",
